@@ -13088,7 +13088,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The four major American sports leagues (MLB, NFL, NBA, and NHL) have very long and extensive histories, and established throughout each league's history were traditions and "common knowledge" that many managers and front offices adhere to, to this day. However, many of the rules and practices that teams follow simply do not match up with what they mathematically <i>should</i> be doing.</p>
 <p>The goal of every sports team should be to win games, and so every decision made by a coach should be made with the intention of increasing the probability that that team will win the game. For example, if a football coach thinks that kicking an onside kick will make them more likely to win the game, then they should choose to kick an onside kick. Despite this, there are many decisions that coaches make that are made because of deep-rooted traditions in the sport, without considering the data whatsoever. One of the most famous examples of this is punting in football: conventional wisdom states that football teams should almost never go for it on 4th down, but many different sources show that punting is almost never the mathematically correct decision (<a href="https://www.footballstudyhall.com/2013/11/15/5105958/fourth-down-pulaski-academy-kevin-kelley#:~:text=Kevin%20Kelley%2C%20Pulaski&#39;s%20coach%20never,attempts%20onside%20kicks%20after%20scoring">https://www.footballstudyhall.com/2013/11/15/5105958/fourth-down-pulaski-academy-kevin-kelley#:~:text=Kevin%20Kelley%2C%20Pulaski&#39;s%20coach%20never,attempts%20onside%20kicks%20after%20scoring</a>).</p>
-<p>In this tutorial I will discuss the ways in which win probability is used and misused in the MLB, NFL, NBA, and NHL. In doing so, I will walk through all the steps of analyzing data, from retreiving, cleaning, and processing the data to creating predictive models of different real-life scenareos.</p>
+<p>In this tutorial I will discuss the ways in which win probability is used and misused in when deciding to pull the goalie in the NHL. In doing so, I will walk through all the steps of analyzing data, from retreiving, cleaning, and processing the data to creating predictive models of different real-life scenareos.</p>
 
 </div>
 </div>
@@ -13096,19 +13096,19 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Part 1: Expected Value and the 2015-16 Golden State Warriors</p>
-<p>Before we talk about win probability, we need to talk about a concept called "expected value". In the context of sports, expected value (EV) is a measure of how many points that you can expect will result from a decision. The equation for EV is (equation). For example, say we are playing a game, where whenever I flip a coin, if it lands on heads, I give you $10, and if it lands on tails, you give me $5. The equation for EV in this situation is EV = .5<em>($10) + .5</em>(-$5) = $2.5; therefore, you can "expect" to win $2.50 every time I flip the coin.</p>
-<p>As another example, take Steve Nash: in the 2005-06 season, Nash made 54.8\% of his 2-point shots, and 43.9\% of his 3-point shots. For that season, his expected value of making a 2-point shot was .548<em>(2) = 1.096 points, and his expected value of making a 3-point shot was .439</em>(3) = 1.317 points. This means that, with everything else being equal, a 3-point attempt from Nash was worth about 0.221 points more valuable than a 2-point attempt. Despite this, he attempted 9.0 2-point shots per game that season, while only attempting 4.3 3-point shots per game. If a 3-point shot was worth more than a 2-point shot, why didn't he shoot more 3's? One answer is because, in the 2000s, the 3-pointer was considered a bad shot. Many players and coaches believed that it was a losing strategy to shoot more 3-pointers than 2-pointers, in part because that's not a strategy that had ever worked well enough to win a team a championship. That all changed after Stephen Curry proved just how effective 3's could be.</p>
-<p>In the 2015-16 season, Steph shot 45.4% from 3-point range and 56.6% from 2 point range, meaning that his EV for 2-pointers and 3-pointers were 1.132 and 1.362 points per shot, respectively. However, Curry had 11.2 3-point attempts per game, compared to 9.0 2-point attempts. This was one reason why his Golden State Warriors won a record 73 games that season, and one reason why he recieved every single first-place MVP vote that season. This shows that expected value plays a major role in the success of a sports team.</p>
-<p>While choosing the higher EV decision doesn't always lead to a higher win probability (more on that later), due to basketball's high scoring volume and high number of possessions per game, always taking high EV shots will almost always lead to a team winning. Steph's 2015-16 MVP season was a wake-up call for the entire NBA; would shooting higher-EV shots lead to more success?</p>
-<p>In this first part, we will determine how predictive taking high-EV shots</p>
+<p>Pulling the Goalie</p>
+<p>Before we talk about win probability, we need to talk about a concept called "expected value". In the context of sports, expected value (EV) is a measure of how many points that you can expect will result from a decision. The equation for EV is (equation). For example, say we are playing a game, where whenever I flip a coin, if it lands on heads, I give you 10 dollars, and if it lands on tails, you give me 5 dollars. The equation for EV in this situation is EV = .5<em>(10 dollars) + .5</em>(-5 dollars) = 2.5 dollars; therefore, you can "expect" to win 2 dollars and 50 cents every time I flip the coin.</p>
+<p>You might expect that making the highest EV decisions would always result in a higher chance for winning a game, but this is not always the case. Imagine a hockey game between the Boston Bruins and the New York Rangers: there are  2 minutes left in the game, and the Bruins are losing 2-3. With two minutes left, the Bruins decide to substitute their goalie for another skater. Andrew Thomas of Harvard University analyzed data from all NHL games between 2003 and 2007 and found that, in games where a goalie was pulled, the winning team scored on the empty net 34% of the time, while the team with the extra skater scored 30% of the time (<a href="https://fliphtml5.com/snvq/xptx/basic">https://fliphtml5.com/snvq/xptx/basic</a>). So if the Rangers and Bruins are evenly matched, then the Bruins' expected value of pulling the goalie is EV = .3 <em> (1) + .34 </em> (-1) = -.04.</p>
+<p>If the Bruins get negative EV from pulling the goalie, then why do they do it? The answer is because they don't care whether they lose by 1 or lose by 2: they just want to tie the game. Despite being a negative EV decision, deciding to pull the goalie increases the Bruins' chances of winning the game. It would be terribly stupid to pull the goalie while the score is still 0-0 in the first period, but it becomes the smart thing to do if you're losing in the third. This begs the question: when should a team decide to pull their goalie?</p>
+<p>In this part, we will be using NHL Game Data courtesy of Martin Ellis (<a href="https://www.kaggle.com/martinellis/nhl-game-data?select=game_plays.csv">https://www.kaggle.com/martinellis/nhl-game-data?select=game_plays.csv</a>). This database contains game data from almost all NHL games played between the 2000-01 season and the 2019-20 season. We will be extracting data from 4 of the tables in this database: "total_shifts" tells us how much time each player is on the ice; "total_plays" tells us about every single play that happens in each game, be it a shot, penalty, goal, faceoff, or anything else; "games" gives us general stats about each game; and "game_goalie_stats" gives us the stats for each goaltender for every game. The ultimate goal is to learn more about when the optimal time to pull the goalie is in a losing game, based on available data.</p>
+<p>The following are all of the python packages that we will be using. They will be used later on for manipulating data and creating models, among other things</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[471]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -13120,12 +13120,14 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">sqlite3</span>
 <span class="kn">import</span> <span class="nn">statistics</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 <span class="kn">from</span> <span class="nn">sklearn.neural_network</span> <span class="kn">import</span> <span class="n">MLPRegressor</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 
 <span class="n">pref</span> <span class="o">=</span> <span class="s2">&quot;D:</span><span class="se">\\</span><span class="s2">Documents</span><span class="se">\\</span><span class="s2">Computer Programs</span><span class="se">\\</span><span class="s2">CMSC320</span><span class="se">\\</span><span class="s2">Final_Project</span><span class="se">\\</span><span class="s2">&quot;</span>
 </pre></div>
@@ -13134,230 +13136,6 @@ div#notebook {
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pref</span> <span class="o">+</span> <span class="s2">&quot;NBA</span><span class="se">\\</span><span class="s2">2016-17_NBA_Shot_data.csv&quot;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="c1"># calculate each player&#39;s proportion of high EV shots, and whether that relates to team success</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[7]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Rk</th>
-      <th>Player▲</th>
-      <th>Pos</th>
-      <th>Age</th>
-      <th>Tm</th>
-      <th>G</th>
-      <th>GS</th>
-      <th>MP</th>
-      <th>FG</th>
-      <th>FGA</th>
-      <th>...</th>
-      <th>FT%</th>
-      <th>ORB</th>
-      <th>DRB</th>
-      <th>TRB</th>
-      <th>AST</th>
-      <th>STL</th>
-      <th>BLK</th>
-      <th>TOV</th>
-      <th>PF</th>
-      <th>PTS</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>Álex Abrines\abrinal01</td>
-      <td>SG</td>
-      <td>23</td>
-      <td>OKC</td>
-      <td>68</td>
-      <td>6</td>
-      <td>15.5</td>
-      <td>2.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>0.898</td>
-      <td>0.3</td>
-      <td>1.0</td>
-      <td>1.3</td>
-      <td>0.6</td>
-      <td>0.5</td>
-      <td>0.1</td>
-      <td>0.5</td>
-      <td>1.7</td>
-      <td>6.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>Quincy Acy\acyqu01</td>
-      <td>PF</td>
-      <td>26</td>
-      <td>TOT</td>
-      <td>38</td>
-      <td>1</td>
-      <td>14.7</td>
-      <td>1.8</td>
-      <td>4.5</td>
-      <td>...</td>
-      <td>0.750</td>
-      <td>0.5</td>
-      <td>2.5</td>
-      <td>3.0</td>
-      <td>0.5</td>
-      <td>0.4</td>
-      <td>0.4</td>
-      <td>0.6</td>
-      <td>1.8</td>
-      <td>5.8</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>Steven Adams\adamsst01</td>
-      <td>C</td>
-      <td>23</td>
-      <td>OKC</td>
-      <td>80</td>
-      <td>80</td>
-      <td>29.9</td>
-      <td>4.7</td>
-      <td>8.2</td>
-      <td>...</td>
-      <td>0.611</td>
-      <td>3.5</td>
-      <td>4.2</td>
-      <td>7.7</td>
-      <td>1.1</td>
-      <td>1.1</td>
-      <td>1.0</td>
-      <td>1.8</td>
-      <td>2.4</td>
-      <td>11.3</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>Arron Afflalo\afflaar01</td>
-      <td>SG</td>
-      <td>31</td>
-      <td>SAC</td>
-      <td>61</td>
-      <td>45</td>
-      <td>25.9</td>
-      <td>3.0</td>
-      <td>6.9</td>
-      <td>...</td>
-      <td>0.892</td>
-      <td>0.1</td>
-      <td>1.9</td>
-      <td>2.0</td>
-      <td>1.3</td>
-      <td>0.3</td>
-      <td>0.1</td>
-      <td>0.7</td>
-      <td>1.7</td>
-      <td>8.4</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>Alexis Ajinça\ajincal01</td>
-      <td>C</td>
-      <td>28</td>
-      <td>NOP</td>
-      <td>39</td>
-      <td>15</td>
-      <td>15.0</td>
-      <td>2.3</td>
-      <td>4.6</td>
-      <td>...</td>
-      <td>0.725</td>
-      <td>1.2</td>
-      <td>3.4</td>
-      <td>4.5</td>
-      <td>0.3</td>
-      <td>0.5</td>
-      <td>0.6</td>
-      <td>0.8</td>
-      <td>2.0</td>
-      <td>5.3</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 30 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Part 2: Pulling the Goalie</p>
-<p>As stated above, basketball is a game where playing with EV in mind is important in just about every single minute of the game. In ice hockey, that isn't necessarily the case.</p>
-<p>Imagine a hockey game between the Boston Bruins and the New York Rangers: there are  2 minutes left in the game, and the Bruins are losing 2-3. The Bruins decide to substitute their goalie for another skater. Andrew Thomas of Harvard University analyzed data from all NHL games between 2003 and 2007 and found that, in games where a goalie was pulled, the winning team scored on the empty net 34% of the time, while the team with the extra skater scored 30% of the time (<a href="https://fliphtml5.com/snvq/xptx/basic">https://fliphtml5.com/snvq/xptx/basic</a>). So if the Rangers and Bruins are evenly matched, then the Bruins' expected value of pulling the goalie is EV = .3 <em> (1) + .34 </em> (-1) = -.04.</p>
-<p>If the Bruins get negative EV from pulling the goalie, then why do they do it? The answer is because they don't care whether they lose by 1 or lose by 2: they just want to tie the game. Despite being a negative EV decision, deciding to pull the goalie increases the Bruins' chances of winning the game. It would be terribly stupid to pull the goalie while the score is still 0-0 in the first period, but it becomes the smart thing to do if you're losing in the third. This begs the question: when should a team decide to pull their goalie?</p>
-<p>In this part, we will be using NHL Game Data courtesy of Martin Ellis (<a href="https://www.kaggle.com/martinellis/nhl-game-data?select=game_plays.csv">https://www.kaggle.com/martinellis/nhl-game-data?select=game_plays.csv</a>). This database contains game data from almost all NHL games played between the 2000-01 season and the 2019-20 season. We will be extracting data from 4 of the tables in this database: "total_shifts" tells us how much time each player is on the ice; "total_plays" tells us about every single play that happens in each game, be it a shot, penalty, goal, faceoff, or anything else; "games" gives us general stats about each game; and "game_goalie_stats" gives us the stats for each goaltender for every game. The ultimate goal is to learn more about when the optimal time to pull the goalie is in a losing game, based on available data.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13369,7 +13147,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[205]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">total_shifts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">pref</span> <span class="o">+</span> <span class="s2">&quot;NHL</span><span class="se">\\</span><span class="s2">game_shifts.csv&quot;</span><span class="p">)</span>
@@ -13390,15 +13168,15 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next, we will find every game in which a team was losing at the end of the game and decided to pull the goalie. Unfortunately, this information is not readily available in the database, so we will have to extrapolate. So in this step, we will first isolate every goalie's shift. Goalies are the only players in hockey who stay on the ice for more than just a minute or so at a time. All goalies start their shift at the beginning of the third period (2400 seconds into the game), and given that the longest shift in NHL history is around 310 seconds, we can safely say that if a shift starts at time marker 2400 and ends beyond 2710, then it's a goalie's shift.</p>
-<p>We also know that if a goalie finished the game in net (i.e. their shift ends at time marker 3600), then they were not pulled. Therefore, any goalie shift that ends before the 3600 mark must have been pulled. We store these shifts in the "pulled_goalies" variable.</p>
+<p>Next, we will find every game in which a team was losing at the end of the game and decided to pull the goalie. Unfortunately, this information is not readily available in the database, so we will have to extrapolate from what we have. So in this step, we will first isolate every goalie's shift. Goalies are the only players in hockey who stay on the ice for more than just a minute or so at a time. All goalies start their shift at the beginning of the third period (2400 seconds into the game), and given that the longest shift by a skater in NHL history is around 310 seconds, we can safely say that if a shift starts at time marker 2400 and ends beyond 2710, then it's a goalie's shift.</p>
+<p>We also know that if a goalie finished the game in net (i.e. their shift ends at time marker 3600), then they were not pulled. Therefore, any goalie whose shift ends before the 3600 mark must have been pulled. We store these shifts in the "pulled_goalies" variable.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[321]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">goalies</span> <span class="o">=</span> <span class="n">total_shifts</span><span class="p">[</span> <span class="p">(</span><span class="n">total_shifts</span><span class="p">[</span><span class="s2">&quot;shift_start&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2400</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">total_shifts</span><span class="p">[</span><span class="s2">&quot;shift_end&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2710</span><span class="p">)</span> <span class="p">]</span>
@@ -13420,7 +13198,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[322]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">number_of_games</span> <span class="o">=</span> <span class="n">goalies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
@@ -13453,14 +13231,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So about 72.93% of games have a situation where the goalie is pulled at the end of the game. (SAY PROBLEMS WITH THIS NUMBER)</p>
+<p>So about 72.93% of games have a situation where the goalie is pulled at the end of the game. While this is a highly accurate figure, it is not completely accurate. The main culprit of this inaccuracy has to do with delayed penalties: when a team gets flagged for a penalty, the other team's goalie will go to the bench as a way of starting their power play early. This means that the 72.9% number is an overestimate, since it counts all delayed penalties like that in its calculation. Despite this inaccuracy, we will continue to use this table since it is accurate enough.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[323]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -13476,7 +13254,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[323]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13561,14 +13339,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a small section of the "pulled_goalies" table. From now on, we will use this table to represent the games that have a pulled goalie in them. This table doesn't tell us very much about each game, so we'll use the dataset to add more and more useful information. First, the season that each game was played in, as well as the time left in the game when the goalie was pulled:</p>
+<p>This is a small section of the "pulled_goalies" table. From now on, we will use this table to represent the games that have a pulled goalie in them. This table doesn't tell us very much about each game, so we'll use the dataset to add more and more useful information. First, we'll add the season that each game was played in, as well as the time left in the game when the goalie was pulled:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[333]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">seasons</span> <span class="o">=</span> <span class="p">[]</span>
@@ -13591,29 +13369,7 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>&lt;ipython-input-333-fd82a71ee41f&gt;:4: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;season&#34;] = seasons
-&lt;ipython-input-333-fd82a71ee41f&gt;:6: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;time_left&#34;] = 3600 - pulled_goalies[&#34;shift_end&#34;]
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[333]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13717,7 +13473,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[334]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">goals</span> <span class="o">=</span> <span class="n">total_plays</span><span class="p">[</span><span class="n">total_plays</span><span class="p">[</span><span class="s2">&quot;event&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Goal&quot;</span><span class="p">]</span>
@@ -13725,29 +13481,6 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>&lt;ipython-input-334-87214652f07c&gt;:2: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  goals[&#34;gameTime&#34;] = goals[&#34;periodTime&#34;] + (goals[&#34;period&#34;] - 1) * 1200
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13762,7 +13495,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[335]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">losing_scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -13857,53 +13590,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>&lt;ipython-input-335-7b9d1c5cfaf4&gt;:66: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;losingScore&#34;] = losing_scores
-&lt;ipython-input-335-7b9d1c5cfaf4&gt;:67: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;losingTeam&#34;] = losing_teams
-&lt;ipython-input-335-7b9d1c5cfaf4&gt;:68: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;winningScore&#34;] = winning_scores
-&lt;ipython-input-335-7b9d1c5cfaf4&gt;:69: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;winningTeam&#34;] = winning_teams
-&lt;ipython-input-335-7b9d1c5cfaf4&gt;:70: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;goalsForLosingTeam&#34;] = goals_for_losing_team
-&lt;ipython-input-335-7b9d1c5cfaf4&gt;:71: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  pulled_goalies[&#34;didWinningTeamScore&#34;] = did_winning_team_score
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[335]:</div>
+    <div class="prompt output_prompt">Out[8]:</div>
 
 
 
@@ -14042,14 +13729,14 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point, we have enough data to do some simple analysis. But what other factors might be able to predict the losing team's ability to score? Well, if the losing team is usually pretty good on offense, then clearly they will be more likely to come back. Likewise, if the winning team is usually pretty good on defense, then they will be less likely to come back. Because of this, we should calculate how good each losing team's offense is, as well as how good each winning team's defense is. How can we quantify this? One way of quantifying a team's offense is by using their Goals Per Game (GPG), which is the average number of goals that team scores in a game on average. A way of quantifying a team's defense is by using their goalie's Goals Against Average (GAA), which is the average number of goals that they allow per game on average.</p>
+<p>At this point, we have enough data to do some simple analysis. But what other factors might influence the losing team's ability to score? Well, if the losing team is usually pretty good on offense, then clearly they will be more likely to come back. Likewise, if the winning team is usually pretty good on defense, then a comeback will be less likely. Because of this, we should calculate how good each losing team's offense is, as well as how good each winning team's defense is. How can we quantify this? One way of measuring a team's offense is by using their Goals Per Game (GPG), which is the average number of goals that team scores in an average game. A way of quantifying a team's defense is by using their goalie's Goals Against Average (GAA), which is the average number of goals that they allow in an average game.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[336]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">seasons</span> <span class="o">=</span> <span class="p">[]</span>
@@ -14096,7 +13783,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[337]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">losing_GPG</span> <span class="o">=</span> <span class="p">[]</span>
@@ -14107,174 +13794,19 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     
 <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;losingGPG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">losing_GPG</span>
 <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;winningGAA&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">winning_GAA</span>
-
-<span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[337]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>game_id</th>
-      <th>player_id</th>
-      <th>period</th>
-      <th>shift_start</th>
-      <th>shift_end</th>
-      <th>season</th>
-      <th>time_left</th>
-      <th>losingScore</th>
-      <th>losingTeam</th>
-      <th>winningScore</th>
-      <th>winningTeam</th>
-      <th>goalsForLosingTeam</th>
-      <th>didWinningTeamScore</th>
-      <th>goal_diff</th>
-      <th>losingGPG</th>
-      <th>winningGAA</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1599</th>
-      <td>2018020003</td>
-      <td>8469608</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3469.0</td>
-      <td>20182019</td>
-      <td>131.0</td>
-      <td>2</td>
-      <td>20</td>
-      <td>4</td>
-      <td>23</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.488372</td>
-      <td>2.908813</td>
-    </tr>
-    <tr>
-      <th>2646</th>
-      <td>2018020004</td>
-      <td>8474889</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3511.0</td>
-      <td>20182019</td>
-      <td>89.0</td>
-      <td>2</td>
-      <td>28</td>
-      <td>4</td>
-      <td>24</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.470000</td>
-      <td>2.843036</td>
-    </tr>
-    <tr>
-      <th>6597</th>
-      <td>2018020005</td>
-      <td>8475622</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3297.0</td>
-      <td>20182019</td>
-      <td>303.0</td>
-      <td>0</td>
-      <td>7</td>
-      <td>3</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2.756098</td>
-      <td>2.324237</td>
-    </tr>
-    <tr>
-      <th>8294</th>
-      <td>2018020008</td>
-      <td>8475852</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3418.0</td>
-      <td>20182019</td>
-      <td>182.0</td>
-      <td>0</td>
-      <td>12</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.897959</td>
-      <td>2.185846</td>
-    </tr>
-    <tr>
-      <th>8708</th>
-      <td>2018020006</td>
-      <td>8468685</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3489.0</td>
-      <td>20182019</td>
-      <td>111.0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2</td>
-      <td>18</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.768293</td>
-      <td>2.517451</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[338]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14287,7 +13819,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[338]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
@@ -14423,481 +13955,6 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
       <td>1</td>
       <td>2.768293</td>
       <td>2.517451</td>
-    </tr>
-    <tr>
-      <th>12941</th>
-      <td>2018020013</td>
-      <td>8471227</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3479.0</td>
-      <td>20182019</td>
-      <td>121.0</td>
-      <td>1</td>
-      <td>30</td>
-      <td>2</td>
-      <td>21</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.573171</td>
-      <td>2.706575</td>
-    </tr>
-    <tr>
-      <th>25661</th>
-      <td>2018020020</td>
-      <td>8475660</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3466.0</td>
-      <td>20182019</td>
-      <td>134.0</td>
-      <td>2</td>
-      <td>22</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.829268</td>
-      <td>3.086509</td>
-    </tr>
-    <tr>
-      <th>26968</th>
-      <td>2018020017</td>
-      <td>8468685</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>2748.0</td>
-      <td>20182019</td>
-      <td>852.0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>2</td>
-      <td>7</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>3.047524</td>
-    </tr>
-    <tr>
-      <th>28082</th>
-      <td>2018020018</td>
-      <td>8475883</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3406.0</td>
-      <td>20182019</td>
-      <td>194.0</td>
-      <td>3</td>
-      <td>10</td>
-      <td>4</td>
-      <td>9</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>3.366667</td>
-      <td>3.476002</td>
-    </tr>
-    <tr>
-      <th>29407</th>
-      <td>2018020021</td>
-      <td>8471306</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3487.0</td>
-      <td>20182019</td>
-      <td>113.0</td>
-      <td>3</td>
-      <td>2</td>
-      <td>4</td>
-      <td>18</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.744444</td>
-      <td>2.517451</td>
-    </tr>
-    <tr>
-      <th>31777</th>
-      <td>2018020025</td>
-      <td>8470594</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3480.0</td>
-      <td>20182019</td>
-      <td>120.0</td>
-      <td>0</td>
-      <td>54</td>
-      <td>1</td>
-      <td>30</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3.044444</td>
-      <td>2.633950</td>
-    </tr>
-    <tr>
-      <th>33051</th>
-      <td>2018020027</td>
-      <td>8477293</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3525.0</td>
-      <td>20182019</td>
-      <td>75.0</td>
-      <td>0</td>
-      <td>53</td>
-      <td>1</td>
-      <td>24</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.597561</td>
-      <td>2.843036</td>
-    </tr>
-    <tr>
-      <th>33308</th>
-      <td>2018020026</td>
-      <td>8470880</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3496.0</td>
-      <td>20182019</td>
-      <td>104.0</td>
-      <td>2</td>
-      <td>4</td>
-      <td>4</td>
-      <td>21</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.975610</td>
-      <td>2.706575</td>
-    </tr>
-    <tr>
-      <th>34304</th>
-      <td>2018020028</td>
-      <td>8474593</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3471.0</td>
-      <td>20182019</td>
-      <td>129.0</td>
-      <td>4</td>
-      <td>23</td>
-      <td>5</td>
-      <td>20</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.743902</td>
-      <td>2.700020</td>
-    </tr>
-    <tr>
-      <th>45109</th>
-      <td>2018020029</td>
-      <td>8480382</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3447.0</td>
-      <td>20182019</td>
-      <td>153.0</td>
-      <td>5</td>
-      <td>3</td>
-      <td>7</td>
-      <td>12</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>2.548789</td>
-    </tr>
-    <tr>
-      <th>45216</th>
-      <td>2018020030</td>
-      <td>8470320</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3447.0</td>
-      <td>20182019</td>
-      <td>153.0</td>
-      <td>4</td>
-      <td>16</td>
-      <td>5</td>
-      <td>10</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3.292683</td>
-      <td>2.840130</td>
-    </tr>
-    <tr>
-      <th>46183</th>
-      <td>2018020031</td>
-      <td>8473541</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3244.0</td>
-      <td>20182019</td>
-      <td>356.0</td>
-      <td>1</td>
-      <td>17</td>
-      <td>3</td>
-      <td>26</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>2.955136</td>
-    </tr>
-    <tr>
-      <th>49731</th>
-      <td>2018020032</td>
-      <td>8477237</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3487.0</td>
-      <td>20182019</td>
-      <td>113.0</td>
-      <td>3</td>
-      <td>9</td>
-      <td>5</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.951220</td>
-      <td>2.324237</td>
-    </tr>
-    <tr>
-      <th>50299</th>
-      <td>2018020033</td>
-      <td>8474889</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3325.0</td>
-      <td>20182019</td>
-      <td>275.0</td>
-      <td>0</td>
-      <td>28</td>
-      <td>3</td>
-      <td>2</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>3.470000</td>
-      <td>2.185846</td>
-    </tr>
-    <tr>
-      <th>50766</th>
-      <td>2018020034</td>
-      <td>8470594</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3489.0</td>
-      <td>20182019</td>
-      <td>111.0</td>
-      <td>2</td>
-      <td>54</td>
-      <td>4</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>3.044444</td>
-      <td>3.047524</td>
-    </tr>
-    <tr>
-      <th>56288</th>
-      <td>2018020037</td>
-      <td>8474593</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3565.0</td>
-      <td>20182019</td>
-      <td>35.0</td>
-      <td>3</td>
-      <td>23</td>
-      <td>5</td>
-      <td>12</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>2.743902</td>
-      <td>2.548789</td>
-    </tr>
-    <tr>
-      <th>57277</th>
-      <td>2018020038</td>
-      <td>8475831</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3470.0</td>
-      <td>20182019</td>
-      <td>130.0</td>
-      <td>2</td>
-      <td>21</td>
-      <td>4</td>
-      <td>29</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.072917</td>
-      <td>2.653350</td>
-    </tr>
-    <tr>
-      <th>58964</th>
-      <td>2018020040</td>
-      <td>8475789</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3501.0</td>
-      <td>20182019</td>
-      <td>99.0</td>
-      <td>1</td>
-      <td>26</td>
-      <td>2</td>
-      <td>52</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.463415</td>
-      <td>2.824624</td>
-    </tr>
-    <tr>
-      <th>59463</th>
-      <td>2018020041</td>
-      <td>8471750</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3354.0</td>
-      <td>20182019</td>
-      <td>246.0</td>
-      <td>4</td>
-      <td>25</td>
-      <td>6</td>
-      <td>10</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.552083</td>
-      <td>2.840130</td>
-    </tr>
-    <tr>
-      <th>64988</th>
-      <td>2018020042</td>
-      <td>8467950</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3481.0</td>
-      <td>20182019</td>
-      <td>119.0</td>
-      <td>4</td>
-      <td>9</td>
-      <td>6</td>
-      <td>4</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.951220</td>
-      <td>3.237267</td>
-    </tr>
-    <tr>
-      <th>65802</th>
-      <td>2018020043</td>
-      <td>8470594</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3472.0</td>
-      <td>20182019</td>
-      <td>128.0</td>
-      <td>2</td>
-      <td>54</td>
-      <td>4</td>
-      <td>15</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.044444</td>
-      <td>2.830364</td>
-    </tr>
-    <tr>
-      <th>69768</th>
-      <td>2018020045</td>
-      <td>8475660</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3461.0</td>
-      <td>20182019</td>
-      <td>139.0</td>
-      <td>1</td>
-      <td>22</td>
-      <td>3</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.829268</td>
-      <td>2.324237</td>
-    </tr>
-    <tr>
-      <th>71082</th>
-      <td>2018020047</td>
-      <td>8473503</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3496.0</td>
-      <td>20182019</td>
-      <td>104.0</td>
-      <td>4</td>
-      <td>13</td>
-      <td>5</td>
-      <td>29</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3.256098</td>
-      <td>2.653350</td>
-    </tr>
-    <tr>
-      <th>72460</th>
-      <td>2018020048</td>
-      <td>8477831</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3462.0</td>
-      <td>20182019</td>
-      <td>138.0</td>
-      <td>0</td>
-      <td>15</td>
-      <td>6</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>6</td>
-      <td>3.386364</td>
-      <td>3.086509</td>
-    </tr>
-    <tr>
-      <th>73894</th>
-      <td>2018020050</td>
-      <td>8476876</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3528.0</td>
-      <td>20182019</td>
-      <td>72.0</td>
-      <td>2</td>
-      <td>54</td>
-      <td>4</td>
-      <td>5</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>3.044444</td>
-      <td>2.743814</td>
     </tr>
   </tbody>
 </table>
@@ -14920,7 +13977,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[342]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">did_they_win</span> <span class="o">=</span> <span class="p">[]</span>
@@ -14935,9 +13992,6 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
     <span class="n">did_they_win</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">succ</span><span class="p">)</span>
 
 <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;didTheyWin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">did_they_win</span>
-
-
-<span class="c1">#pulled_goalies.head(20)</span>
 </pre></div>
 
     </div>
@@ -14955,536 +14009,13 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[351]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goal_diff&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goalsForLosingTeam&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[351]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>game_id</th>
-      <th>player_id</th>
-      <th>period</th>
-      <th>shift_start</th>
-      <th>shift_end</th>
-      <th>season</th>
-      <th>time_left</th>
-      <th>losingScore</th>
-      <th>losingTeam</th>
-      <th>winningScore</th>
-      <th>winningTeam</th>
-      <th>goalsForLosingTeam</th>
-      <th>didWinningTeamScore</th>
-      <th>goal_diff</th>
-      <th>losingGPG</th>
-      <th>winningGAA</th>
-      <th>success</th>
-      <th>didTheyWin</th>
-      <th>did_they_come_back</th>
-      <th>didTheyComeBack</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1599</th>
-      <td>2018020003</td>
-      <td>8469608</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3469.0</td>
-      <td>20182019</td>
-      <td>131.0</td>
-      <td>2</td>
-      <td>20</td>
-      <td>4</td>
-      <td>23</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.488372</td>
-      <td>2.908813</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2646</th>
-      <td>2018020004</td>
-      <td>8474889</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3511.0</td>
-      <td>20182019</td>
-      <td>89.0</td>
-      <td>2</td>
-      <td>28</td>
-      <td>4</td>
-      <td>24</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.470000</td>
-      <td>2.843036</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>6597</th>
-      <td>2018020005</td>
-      <td>8475622</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3297.0</td>
-      <td>20182019</td>
-      <td>303.0</td>
-      <td>0</td>
-      <td>7</td>
-      <td>3</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2.756098</td>
-      <td>2.324237</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>8294</th>
-      <td>2018020008</td>
-      <td>8475852</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3418.0</td>
-      <td>20182019</td>
-      <td>182.0</td>
-      <td>0</td>
-      <td>12</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.897959</td>
-      <td>2.185846</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>8708</th>
-      <td>2018020006</td>
-      <td>8468685</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3489.0</td>
-      <td>20182019</td>
-      <td>111.0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2</td>
-      <td>18</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.768293</td>
-      <td>2.517451</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>12941</th>
-      <td>2018020013</td>
-      <td>8471227</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3479.0</td>
-      <td>20182019</td>
-      <td>121.0</td>
-      <td>1</td>
-      <td>30</td>
-      <td>2</td>
-      <td>21</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.573171</td>
-      <td>2.706575</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>25661</th>
-      <td>2018020020</td>
-      <td>8475660</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3466.0</td>
-      <td>20182019</td>
-      <td>134.0</td>
-      <td>2</td>
-      <td>22</td>
-      <td>4</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.829268</td>
-      <td>3.086509</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>26968</th>
-      <td>2018020017</td>
-      <td>8468685</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>2748.0</td>
-      <td>20182019</td>
-      <td>852.0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>2</td>
-      <td>7</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>3.047524</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>28082</th>
-      <td>2018020018</td>
-      <td>8475883</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3406.0</td>
-      <td>20182019</td>
-      <td>194.0</td>
-      <td>3</td>
-      <td>10</td>
-      <td>4</td>
-      <td>9</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>3.366667</td>
-      <td>3.476002</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>29407</th>
-      <td>2018020021</td>
-      <td>8471306</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3487.0</td>
-      <td>20182019</td>
-      <td>113.0</td>
-      <td>3</td>
-      <td>2</td>
-      <td>4</td>
-      <td>18</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.744444</td>
-      <td>2.517451</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>31777</th>
-      <td>2018020025</td>
-      <td>8470594</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3480.0</td>
-      <td>20182019</td>
-      <td>120.0</td>
-      <td>0</td>
-      <td>54</td>
-      <td>1</td>
-      <td>30</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3.044444</td>
-      <td>2.633950</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>33051</th>
-      <td>2018020027</td>
-      <td>8477293</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3525.0</td>
-      <td>20182019</td>
-      <td>75.0</td>
-      <td>0</td>
-      <td>53</td>
-      <td>1</td>
-      <td>24</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.597561</td>
-      <td>2.843036</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>33308</th>
-      <td>2018020026</td>
-      <td>8470880</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3496.0</td>
-      <td>20182019</td>
-      <td>104.0</td>
-      <td>2</td>
-      <td>4</td>
-      <td>4</td>
-      <td>21</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.975610</td>
-      <td>2.706575</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>34304</th>
-      <td>2018020028</td>
-      <td>8474593</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3471.0</td>
-      <td>20182019</td>
-      <td>129.0</td>
-      <td>4</td>
-      <td>23</td>
-      <td>5</td>
-      <td>20</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.743902</td>
-      <td>2.700020</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>45109</th>
-      <td>2018020029</td>
-      <td>8480382</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3447.0</td>
-      <td>20182019</td>
-      <td>153.0</td>
-      <td>5</td>
-      <td>3</td>
-      <td>7</td>
-      <td>12</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>2.548789</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>45216</th>
-      <td>2018020030</td>
-      <td>8470320</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3447.0</td>
-      <td>20182019</td>
-      <td>153.0</td>
-      <td>4</td>
-      <td>16</td>
-      <td>5</td>
-      <td>10</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3.292683</td>
-      <td>2.840130</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>46183</th>
-      <td>2018020031</td>
-      <td>8473541</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3244.0</td>
-      <td>20182019</td>
-      <td>356.0</td>
-      <td>1</td>
-      <td>17</td>
-      <td>3</td>
-      <td>26</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.768293</td>
-      <td>2.955136</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>49731</th>
-      <td>2018020032</td>
-      <td>8477237</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3487.0</td>
-      <td>20182019</td>
-      <td>113.0</td>
-      <td>3</td>
-      <td>9</td>
-      <td>5</td>
-      <td>6</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>2.951220</td>
-      <td>2.324237</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>50299</th>
-      <td>2018020033</td>
-      <td>8474889</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3325.0</td>
-      <td>20182019</td>
-      <td>275.0</td>
-      <td>0</td>
-      <td>28</td>
-      <td>3</td>
-      <td>2</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>3.470000</td>
-      <td>2.185846</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>50766</th>
-      <td>2018020034</td>
-      <td>8470594</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3489.0</td>
-      <td>20182019</td>
-      <td>111.0</td>
-      <td>2</td>
-      <td>54</td>
-      <td>4</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>3.044444</td>
-      <td>3.047524</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -15499,7 +14030,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[433]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;net_goals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goalsForLosingTeam&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;didWinningTeamScore&quot;</span><span class="p">]</span>
@@ -15520,16 +14051,15 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[375]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">pulled_goalies</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#sample size</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># number of games where they came back</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># number of games where they didn&#39;t come back</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyComeBack&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># proportion of games where they came back</span>
 </pre></div>
 
     </div>
@@ -15568,7 +14098,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[376]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didTheyWin&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -15600,7 +14130,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>However, this is not the case; the losing teams win a measley 2.3% of the time when they pull the goalie. Why is this, what is causing this discrepency? There are a few explanations, and the first is with the data itself. In our data, we used all third period goalie shifts that didn't last the whole period. This includes every time a team was losing at the end of the game, but it also included every time a goalie left the ice on a delayed penalty, and every time there was a mid-period goalie change. These inaccurate data points will make our findings less accurate, but it certainly doesn't explain the above discrepency. Another explanation is that there isn't parity in these games: if a team gets out to a big lead at the beginning of the game, then there's a good chance that they're simply a better team.</p>
+<p>However, this is not the case; the losing teams win a measley 2.3% of the time when they pull the goalie. Why is this, what is causing this discrepency? There are a few explanations, and the first is with the data itself. The database is not 100% accurate, and as stated at the beginning of this tutorial, there are incorrect data points representing delayed penalties and mid-period goalie changes. These inaccurace data points will make our findings less accurate, but it certainly doesn't explain the above discrepency. Another explanation is that there isn't parity in these games: if a team gets out to a big lead at the beginning of the game, then there's a good chance that they're simply a better team.</p>
 <p>Next we'll look at how success changes as the defecit changes:</p>
 
 </div>
@@ -15608,7 +14138,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[377]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp1</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[(</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goal_diff&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)]</span>
@@ -15648,14 +14178,15 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This indicates that pulling the goalie will help eliminate a 1, 2, and 3 goal defecit 15.79%, 2.04%, and .93% of the time, respectively. This tells us the obvious: the larger your opponent's lead, the harder it will be to claw your way back. Next we'll look at the times that winning and teams decide to take the goalie out:</p>
+<p>This indicates that pulling the goalie will help eliminate a 1, 2, and 3 goal defecit 15.79%, 2.04%, and .93% of the time, respectively. This tells us the obvious: the larger your opponent's lead, the harder it will be to claw your way back. In fact, only once in the past 20 years has a team come back to win the game after pulling the goalie with a 3-0 defecit.</p>
+<p>Next we'll look at the times that successful and unsuccessful teams decide to take the goalie out:</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[383]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp1</span> <span class="o">=</span> <span class="n">pulled_goalies</span>
@@ -15719,7 +14250,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[466]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goal_diff&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
@@ -15755,10 +14286,10 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0.08567689]
-[0.16666818]
-[0.28829234]
-[0.36887065]
+<pre>[0.09582011]
+[0.17331494]
+[0.27777061]
+[0.37132783]
 </pre>
 </div>
 </div>
@@ -15777,7 +14308,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[473]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goal_diff&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
@@ -15828,221 +14359,21 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This time we trained a support vector machine, and the numbers are practically indistinguishable from each other. Despite all of the data wrangling we did to get to this point, there is very little insight that we can gather from these machine learning models: the situation is simply too complicated to be predicted with the data points that we chose. So if we can't build a machine learning model that tells us when the optimal time to pull a goalie, what insights can we gain from this?</p>
+<p>This time we trained a support vector machine, and the numbers are practically indistinguishable from each other. Despite all of the data wrangling we did to get to this point, there is very little insight that we can gather from these machine learning models: the situation is simply too complicated to be predicted with the data points that we chose. So if we can't build a machine learning model that tells us when the optimal time to pull a goalie, what insights can we gain from this? Let's look at goal frequency, and how often a goal is scored at even strength versus during a pulled-goalie scenareo.</p>
+<p>In this step we will calculate the average goals-per-game in "regular" situations, then calculate the goals-against frequency and goals-for frequency with the goalie pulled.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[474]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pulled_goalies</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[474]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>game_id</th>
-      <th>player_id</th>
-      <th>period</th>
-      <th>shift_start</th>
-      <th>shift_end</th>
-      <th>season</th>
-      <th>time_left</th>
-      <th>losingScore</th>
-      <th>losingTeam</th>
-      <th>winningScore</th>
-      <th>...</th>
-      <th>goalsForLosingTeam</th>
-      <th>didWinningTeamScore</th>
-      <th>goal_diff</th>
-      <th>losingGPG</th>
-      <th>winningGAA</th>
-      <th>success</th>
-      <th>didTheyWin</th>
-      <th>did_they_come_back</th>
-      <th>didTheyComeBack</th>
-      <th>net_goals</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1599</th>
-      <td>2018020003</td>
-      <td>8469608</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3469.0</td>
-      <td>20182019</td>
-      <td>131.0</td>
-      <td>2</td>
-      <td>20</td>
-      <td>4</td>
-      <td>...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.488372</td>
-      <td>2.908813</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1</td>
-    </tr>
-    <tr>
-      <th>2646</th>
-      <td>2018020004</td>
-      <td>8474889</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3511.0</td>
-      <td>20182019</td>
-      <td>89.0</td>
-      <td>2</td>
-      <td>28</td>
-      <td>4</td>
-      <td>...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3.470000</td>
-      <td>2.843036</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1</td>
-    </tr>
-    <tr>
-      <th>6597</th>
-      <td>2018020005</td>
-      <td>8475622</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3297.0</td>
-      <td>20182019</td>
-      <td>303.0</td>
-      <td>0</td>
-      <td>7</td>
-      <td>3</td>
-      <td>...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2.756098</td>
-      <td>2.324237</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1</td>
-    </tr>
-    <tr>
-      <th>8294</th>
-      <td>2018020008</td>
-      <td>8475852</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3418.0</td>
-      <td>20182019</td>
-      <td>182.0</td>
-      <td>0</td>
-      <td>12</td>
-      <td>1</td>
-      <td>...</td>
-      <td>1</td>
-      <td>0</td>
-      <td>1</td>
-      <td>2.897959</td>
-      <td>2.185846</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>8708</th>
-      <td>2018020006</td>
-      <td>8468685</td>
-      <td>3</td>
-      <td>2400</td>
-      <td>3489.0</td>
-      <td>20182019</td>
-      <td>111.0</td>
-      <td>1</td>
-      <td>3</td>
-      <td>2</td>
-      <td>...</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2.768293</td>
-      <td>2.517451</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>-1</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 21 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[477]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="c1">#[pulled_goalies[&quot;goal_diff&quot;] == 1]</span>
-
-
-
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;didWinningTeamScore&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;goalsForLosingTeam&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="c1">#print(temp.loc[(temp[&quot;goalsForLosingTeam&quot;] == 0)&amp;(temp[&quot;didWinningTeamScore&quot;] == 0)])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">regular_goals_number</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;losingScore&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;winningScore&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">regular_goals_frequency</span> <span class="o">=</span> <span class="n">regular_goals_number</span><span class="o">/</span><span class="p">(</span><span class="mi">3600</span> <span class="o">*</span> <span class="n">pulled_goalies</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">/</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regular_goals_frequency</span><span class="p">)</span> <span class="c1"># Expected goals scored per second</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">regular_goals_frequency</span><span class="o">*</span><span class="mi">3600</span><span class="p">)</span> <span class="c1"># Expected goals scored per game</span>
 </pre></div>
 
     </div>
@@ -16059,9 +14390,8 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>8182
-3232
-1595
+<pre>0.0006976627193157048
+2.511585789536537
 </pre>
 </div>
 </div>
@@ -16070,12 +14400,111 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above block calculates the goals-per-second and goals-per-game that one can expect in all situations where the goalie is not pulled. In any given second, a team has a .0698% chance of scoring. This translates to about 2.51 goals per 60 minutes, or one goal per 23.9 minutes.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[425]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">goals_for_frequency</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;goalsForLosingTeam&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">goals_against_frequency</span> <span class="o">=</span> <span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;didWinningTeamScore&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">pulled_goalies</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">goals_for_frequency</span><span class="o">*</span><span class="mi">3600</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">goals_against_frequency</span><span class="o">*</span><span class="mi">3600</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3.4886327803892905
+7.0691292452778605
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above block calculates the goals-per-game that one can expect 1) if your goalie is pulled and 2) if your opponent has pulled the goalie. If your goalie is pulled, you can expect to score about 3.49 goals per 60 minutes, or one goal per 17.2 minutes. If your opponent's goalie is pulled, you can expect to score about 7.07 goals per 60 minutes, or one goal per 8.49 minutes.</p>
+<p>This alligns with what we already suspect about pulling the goalie: it is a negative EV decision, but while your opponent is much more likely to score a goal, your likelihood of scoring also increases.</p>
+<p>In this next part, we will simulate 1000 games for every 10-second time interval, and we will determine the percent of times that the losing team comes back from their defecit after pulling their goalie during this time interval.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">,</span><span class="s2">&quot;time_left&quot;</span><span class="p">,</span><span class="s2">&quot;even_strength_comeback_percentage&quot;</span><span class="p">,</span><span class="s2">&quot;pull_goalie_comeback_percentage&quot;</span><span class="p">])</span>
+<span class="n">escp</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">defecits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">timeLeft</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">defecit</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">time</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1200</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">es_comebacks</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span> <span class="c1"># simulate 1000 games with these conditions</span>
+            <span class="n">goalsTotal</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">regular_goals_frequency</span><span class="p">:</span>
+                    <span class="n">goalsTotal</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">elif</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">regular_goals_frequency</span><span class="p">:</span>
+                    <span class="n">goalsTotal</span> <span class="o">-=</span> <span class="mi">1</span>
+            
+                <span class="k">if</span> <span class="n">goalsTotal</span> <span class="o">&gt;=</span> <span class="n">defecit</span><span class="p">:</span>
+                    <span class="n">es_comebacks</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+        <span class="n">escp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">es_comebacks</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">defecits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">defecit</span><span class="p">)</span>
+        <span class="n">timeLeft</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">defecits</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timeLeft</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;even_strength_comeback_percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">escp</span>
+
+<span class="n">pgcp</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">pg_comebacks</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span> <span class="c1"># simulate 1000 games</span>
+        <span class="n">goalsTotal</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">sec</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">goals_for_frequency</span><span class="p">:</span>
+                <span class="n">goalsTotal</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">goals_against_frequency</span><span class="p">:</span>
+                <span class="n">goalsTotal</span> <span class="o">-=</span> <span class="mi">1</span>
+                
+            <span class="k">if</span> <span class="n">goalsTotal</span> <span class="o">&gt;=</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">]:</span>
+                <span class="n">pg_comebacks</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">break</span>
+        
+    <span class="n">pgcp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pg_comebacks</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;pull_goalie_comeback_percentage&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pgcp</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;pull_goalie_comeback_percentage&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;even_strength_comeback_percentage&quot;</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -16088,13 +14517,77 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Shown above is the table of all simulation results for games with a one-goal defecit: it contains the game's time, the percent of the time that the team came back from their defecit without ever pulling the goalie, the percent of the time that the team came back after pulling the goalie at time = "time_left", and the difference between these two percentages. Shown below is a scatter plot of the difference between the percentages versus time left in the game when the goalie was pulled.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Comeback Percent Difference&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time Left In Game (Seconds)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Coaches should want to give their team the greatest opportunity to succeed, so they should decide to pull the goalie when pulling the goalie gives them the best advantage versus leaving the goalie in. According to this graph, with a one-goal defecit this happens around the 300-second mark: that is the approximate maximum of this graph.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;defecit&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="s2">&quot;time_left&quot;</span><span class="p">],</span> <span class="n">temp</span><span class="p">[</span><span class="s2">&quot;diff&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Comeback Percent Difference&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time Left In Game (Seconds)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Conclusion:</p>
+<p>This is an imperfect analysis, but it indicates something that many hockey enthusiasts would not expect: if teams want to win games, they should pull their goalies sooner. On average, successful teams pull their goalie with around 2 minutes and 30 seconds left in the game, which is a full 30 seconds sooner than unsuccessful teams. When examining times that teams score and get scored on with the goalie pulled, we also found that teams pulling their goalie with up to 5 minutes remaining could be the best possible option. Further analysis needs to be done, but this shows one thing: if hockey teams want to win games, they should pull their goalies earlier.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
